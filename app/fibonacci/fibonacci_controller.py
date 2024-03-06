@@ -77,8 +77,8 @@ async def send_email_fibonaci_serie(current_time_colombia: str, serie_fibonaci: 
 
     list_recipients = ["abjuancarlos.12@gmail.com",
                        "abjuancarlos.12@gmail.com",
-                       #    "didier.correa@proteccion.com.co",
-                       #    "correalondon@gmail.com"
+                          "didier.correa@proteccion.com.co",
+                          "correalondon@gmail.com"
                        ]
 
     await send_email_async("Prueba Técnica - Juan Carlos Aguilar Bosiga",

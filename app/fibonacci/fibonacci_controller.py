@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from typing import List
 
 from .fibonacci_service import reverse_fibonacci_serie
@@ -14,7 +14,13 @@ router = APIRouter(
 @router.get("/")
 async def get_fibonacci_serie(request: Request):
     """
+    Endpoint to generate and return the Fibonacci series based on Colombian time.
 
+    Returns:
+    - dict: A dictionary containing the Colombian time and the Fibonacci series.
+
+    Raises:
+    - HTTPException: If there is an error with the initial data or sending the email.
     """
     current_time_colombia = request.state.current_time_colombia
 
@@ -29,11 +35,12 @@ async def get_fibonacci_serie(request: Request):
 
     length_serie_fibonacci = seconds
 
-    print(minute, seconds)
-    print(seed1, seed2, length_serie_fibonacci)
-
-    serie_fibonaci = reverse_fibonacci_serie(
-        seed1, seed2, length_serie_fibonacci)
+    try:
+        serie_fibonaci = reverse_fibonacci_serie(
+            seed1, seed2, length_serie_fibonacci)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error con los datos iniciales: {e}")
 
     await send_email_fibonaci_serie(formatted_time, serie_fibonaci)
 
@@ -41,15 +48,28 @@ async def get_fibonacci_serie(request: Request):
 
 
 async def send_email_fibonaci_serie(current_time_colombia: str, serie_fibonaci: List):
+    """
+    Asynchronously sends an email containing the Fibonacci series and other details.
+
+    Args:
+    - current_time_colombia: The current time in the Colombian timezone.
+    - serie_fibonaci: The Fibonacci series to include in the email.
+
+    Returns:
+    - None
+
+    Raises:
+    - None
+    """
 
     body = f"""Hola, muy buen día a todos. \n\n
 
     La serie de Fibonacci hasta el término dada para la hora: {current_time_colombia} es: \n
     {serie_fibonaci}. \n\n
 
-    url de la documentación: https://54.224.204.103:8000/docs \n\n
+    url de la documentación: https://54.224.204.103:8000/docs \n
 
-    url del servidor o despliegue en internet: https://54.224.204.103:8000 \n\n
+    url del servidor o despliegue en internet: https://54.224.204.103:8000 \n
     
     url del postman https://www.postman.com/joint-operations-geoscientist-20795163/workspace/protecciontest/collection/23108580-339d5254-e595-4237-b0f0-a2ea79057e12?action=share&creator=23108580
     

@@ -4,17 +4,30 @@ import pytz
 
 
 class ColombiaTimeZoneMiddleware(BaseHTTPMiddleware):
+    """
+    Middleware to set the current time in the Colombia timezone for each request.
+    """
     async def dispatch(self, request, call_next):
+        """
+        Dispatch method to set the current time in the Colombia timezone for each request.
+
+        Args:
+        - request: FastAPI Request object.
+        - call_next: Callback function for the next middleware or endpoint.
+
+        Returns:
+        - response: FastAPI Response object.
+        """
 
         colombia_timezone = pytz.timezone('America/Bogota')
 
-        # Obtener la hora actual en UTC
+        # Get the current time in UTC
         current_time_utc = datetime.utcnow()
 
-        # Convertir la hora actual a la zona horaria colombiana
+        # Convert the current time to the Colombia timezone
         current_time_colombia = current_time_utc.astimezone(colombia_timezone)
 
-        # Agregar la hora colombiana al estado de la solicitud
+        # Continue handling the request
         request.state.current_time_colombia = current_time_colombia
 
         response = await call_next(request)

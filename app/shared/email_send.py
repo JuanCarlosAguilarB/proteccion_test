@@ -7,8 +7,12 @@ from typing import List
 
 
 def email_config():
+    """
+    Configure the SMTP server and login to send email.
 
-    # Configurar el servidor SMTP y enviar el correo electrónico
+    Returns:
+    - smtp_server: Configured SMTP server object.
+    """
     try:
         smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
         smtp_server.starttls()
@@ -18,10 +22,21 @@ def email_config():
 
     except Exception as e:
         raise HTTPException(
-            status_code=500, detail=f"No se pudo enviar configurar el servidor  de correo electrónico: {e}")
+            status_code=500, detail=f"Failed to configure email server: {e}")
 
 
-async def send_email_async(subject: str, email_to: List[str], body: dict):
+async def send_email_async(subject: str, email_to: List[str], body: str):
+    """
+    Send an email asynchronously.
+
+    Args:
+    - subject: Subject of the email.
+    - email_to: List of email addresses to send the email to.
+    - body: Body of the email.
+
+    Raises:
+    - HTTPException: If sending the email fails.
+    """
     try:
         smtp_server = email_config()
 
@@ -30,7 +45,6 @@ async def send_email_async(subject: str, email_to: List[str], body: dict):
         msg['To'] = ", ".join(email_to)
         msg['Subject'] = subject
 
-        # body = f"La serie de Fibonacci hasta el término {n} es: {fibonacci_series}"
         msg.attach(MIMEText(body, 'plain'))
 
         smtp_server.send_message(msg)
@@ -38,4 +52,4 @@ async def send_email_async(subject: str, email_to: List[str], body: dict):
 
     except Exception as e:
         raise HTTPException(
-            status_code=500, detail=f"No se pudo enviar el correo electrónico: {e}")
+            status_code=500, detail=f"Failed to send email: {e}")

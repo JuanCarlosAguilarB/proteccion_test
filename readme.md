@@ -8,3 +8,11 @@ source venv/bin/activate
 
 # Windows
 venv\Scripts\activate
+
+
+## Run aplication
+# 1) Install requirements
+pip install -r requirements.txt
+# 2) Run aplication
+
+python3 -m uvicorn main:proteccion_app --reload

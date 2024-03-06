@@ -16,3 +16,8 @@ pip install -r requirements.txt
 # 2) Run aplication
 
 python3 -m uvicorn main:proteccion_app --reload
+
+
+# Run test 
+
+pytest test/app/fibonacci

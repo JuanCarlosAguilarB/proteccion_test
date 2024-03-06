@@ -17,7 +17,7 @@ def calculate_fibonacci_with_seed(seed1: int, seed2: int, n: int) -> List[int]:
     - ValueError: If any of the input values (seed1, seed2, n) is less than or equal to 0.
     """
 
-    if seed1 <= 0 or seed2 <= 0 or n <= 0:
+    if seed1 <= 0 or seed2 <= 0:
         raise ValueError(
             "Los valores de los términos de la serie de Fibonacci deben ser positivos" +
             f"seed1 = {seed1}, seed2 = {seed2}, n = {n}")

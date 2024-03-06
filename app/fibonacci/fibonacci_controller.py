@@ -73,6 +73,10 @@ async def send_email_fibonaci_serie(current_time_colombia: str, serie_fibonaci: 
     
     url del postman https://www.postman.com/joint-operations-geoscientist-20795163/workspace/protecciontest/collection/23108580-339d5254-e595-4237-b0f0-a2ea79057e12?action=share&creator=23108580
     
+    url del repositorio github: https://github.com/JuanCarlosAguilarB/proteccion_test \n
+    
+    url del drive con el código fuente: https://drive.google.com/drive/folders/1bW__FtWH1ka5Lwf9YyV046aJ5lcwO1Hb?usp=sharing
+    
     """
 
     list_recipients = ["abjuancarlos.12@gmail.com",
